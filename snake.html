@@ -245,8 +245,8 @@
         <p>🍎 苹果 +1 分</p >
         <p>⭐ 星星 +5 分</p >
         <p>❤️ 爱心 +1 血</p >
-        <p>小心 💩 粪便 -1 血 + 减速</p >
-        <p style="color:#ff6b6b; font-size:14px;">右上角可开无敌模式</p >
+        <p>小心 💩 粑粑 -1 血 + 减速</p >
+        <p style="color:#ff6b6b; font-size:14px;"></p >
         <button onclick="startGame()">开始游戏</button>
     </div>
 </div>
@@ -363,14 +363,14 @@
         el.textContent = text;
         el.classList.add('show');
         clearTimeout(el.timer);
-        el.timer = setTimeout(() => el.classList.remove('show'), 1800);
+        el.timer = setTimeout(() => el.classList.remove('show'), 2500);
     }
 
     function triggerMsg(category) {
         if (!MESSAGES || !MESSAGES[category]) return;
         const list = MESSAGES[category];
         const msg = list[Math.floor(Math.random() * list.length)];
-        if (msg && !msg.startsWith('【填')) {
+        if (msg && !msg.startsWith('【填？')) {
             showDialog(msg);
         }
     }
@@ -509,7 +509,7 @@
 
         const msgs = MESSAGES?.gameOver || [];
         const msg = msgs[Math.floor(Math.random() * msgs.length)];
-        document.getElementById('gameOverMsg').textContent = (msg && !msg.startsWith('【填')) ? msg : '';
+        document.getElementById('gameOverMsg').textContent = (msg && !msg.startsWith('【填？')) ? msg : '';
 
         document.getElementById('gameOverOverlay').classList.add('active');
     }
