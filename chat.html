@@ -6,168 +6,29 @@
     <title>聊天 - To Tracy</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-        }
-
-        body {
-            background: linear-gradient(180deg, #87CEEB 0%, #98D8E8 100%);
-            display: flex;
-            flex-direction: column;
-        }
-
-        #qVersion {
-            position: fixed;
-            top: 60px;
-            left: 15px;
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 3px solid #8b4513;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 50;
-            user-select: none;
-            animation: float 3s ease-in-out infinite, blink 4s infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        @keyframes blink {
-            0%, 90%, 100% {
-                transform: scaleY(1);
-            }
-            93%, 96% {
-                transform: scaleY(0.1);
-            }
-        }
-
-        #qVersion:active {
-            transform: scale(0.95);
-        }
-
-        #chatArea {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px 15px 15px 110px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .msg {
-            max-width: 75%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-size: 15px;
-            line-height: 1.5;
-            word-wrap: break-word;
-            position: relative;
-            animation: msgIn 0.3s ease-out;
-        }
-
-        @keyframes msgIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-      
-        .msg.bot {
-            align-self: flex-start;
-            background: white;
-            border: 2px solid #8b4513;
-            border-radius: 4px 12px 12px 12px;
-            color: #5c3317;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .msg.user {
-            align-self: flex-end;
-            background: #95EC69;
-            color: #333;
-            border-radius: 12px 4px 12px 12px;
-        }
-
-        #inputArea {
-            display: flex;
-            gap: 8px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.95);
-            border-top: 2px solid #8b4513;
-        }
-
-        #inputBox {
-            flex: 1;
-            padding: 10px 14px;
-            border: 2px solid #d4a76a;
-            border-radius: 20px;
-            outline: none;
-            font-size: 15px;
-            background: white;
-        }
-
-        #inputBox:focus {
-            border-color: #8b4513;
-        }
-
-        #sendBtn {
-            padding: 10px 20px;
-            background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%);
-            border: 2px solid #6b4423;
-            color: #5c3317;
-            cursor: pointer;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        #sendBtn:active {
-            transform: scale(0.95);
-        }
-
-        .back-link {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #8b4513;
-            color: #5c3317;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
-            z-index: 50;
-        }
-
-        .title-bar {
-            background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%);
-            border-bottom: 3px solid #6b4423;
-            padding: 10px;
-            text-align: center;
-            color: #5c3317;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .hint {
-            text-align: center;
-            color: #888;
-            font-size: 12px;
-            padding: 8px;
-            background: rgba(255, 255, 255, 0.5);
-        }
+        html, body { width: 100%; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+        body { background: linear-gradient(180deg, #87CEEB 0%, #98D8E8 100%); display: flex; flex-direction: column; }
+        #qVersion { position: fixed; top: 60px; left: 15px; width: 80px; height: 80px; background: rgba(255, 255, 255, 0.9); border: 3px solid #8b4513; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 50px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 50; user-select: none; animation: float 3s ease-in-out infinite, blink 4s infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes blink { 0%, 90%, 100% { transform: scaleY(1); } 93%, 96% { transform: scaleY(0.1); } }
+        #qVersion:active { transform: scale(0.95); }
+        #chatArea { flex: 1; overflow-y: auto; padding: 20px 15px 15px 110px; display: flex; flex-direction: column; gap: 12px; }
+        .msg { max-width: 75%; padding: 12px 16px; border-radius: 12px; font-size: 15px; line-height: 1.5; word-wrap: break-word; animation: msgIn 0.3s ease-out; }
+        @keyframes msgIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .msg.bot { align-self: flex-start; background: white; border: 2px solid #8b4513; border-radius: 4px 12px 12px 12px; color: #5c3317; }
+        .msg.user { align-self: flex-end; background: #95EC69; color: #333; border-radius: 12px 4px 12px 12px; }
+        #inputArea { display: flex; gap: 8px; padding: 12px; background: rgba(255, 255, 255, 0.95); border-top: 2px solid #8b4513; }
+        #inputBox { flex: 1; padding: 10px 14px; border: 2px solid #d4a76a; border-radius: 20px; outline: none; font-size: 15px; background: white; }
+        #inputBox:focus { border-color: #8b4513; }
+        #sendBtn { padding: 10px 20px; background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%); border: 2px solid #6b4423; color: #5c3317; cursor: pointer; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        #sendBtn:active { transform: scale(0.95); }
+        .back-link { position: fixed; top: 10px; right: 10px; padding: 8px 16px; background: rgba(255, 255, 255, 0.9); border: 2px solid #8b4513; color: #5c3317; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: bold; z-index: 50; }
+        .title-bar { background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%); border-bottom: 3px solid #6b4423; padding: 10px; text-align: center; color: #5c3317; font-weight: bold; font-size: 16px; }
+        .hint { text-align: center; color: #888; font-size: 12px; padding: 8px; background: rgba(255, 255, 255, 0.5); }
+        #firstHint { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 3px solid #8b4513; border-radius: 12px; padding: 25px 30px; max-width: 320px; text-align: center; z-index: 200; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        #firstHint h3 { color: #8b4513; margin-bottom: 15px; }
+        #firstHint p { margin-bottom: 8px; color: #555; }
+        #firstHint .sub { color: #999; font-size: 12px; margin-top: 12px; }
     </style>
 </head>
 <body>
@@ -183,58 +44,65 @@
 </div>
 
 <div id="inputArea">
-    <input type="text" id="inputBox" placeholder="说点什么..." autocomplete="off">
+    <input type="text" id="inputBox" placeholder="试试：你好 / 想你了 / 累吗" autocomplete="off" maxlength="100">
     <button id="sendBtn" onclick="sendMessage()">发送</button>
 </div>
 
-<script src="chat-messages.js"></script>
+<div id="firstHint">
+    <h3>💡 怎么和我聊天</h3>
+    <p>📝 在下面输入框打字</p >
+    <p>👆 点左上角的我</p >
+    <p>😊 试试说"你好"、"想你了"</p >
+    <p class="sub">5 秒后自动消失</p >
+</div>
 
+<script src="chat-messages.js"></script>
+    
 <script>
     const chatArea = document.getElementById('chatArea');
     const inputBox = document.getElementById('inputBox');
 
     function addMsg(text, who) {
-    const div = document.createElement('div');
-    div.className = 'msg ' + who;
-    div.textContent = text;
-    chatArea.appendChild(div);
-    chatArea.scrollTop = chatArea.scrollHeight;
-    saveHistory();
-}
+        const div = document.createElement('div');
+        div.className = 'msg ' + who;
+        div.textContent = text;
+        chatArea.appendChild(div);
+        chatArea.scrollTop = chatArea.scrollHeight;
+        saveHistory();
+    }
 
-function saveHistory() {
-    const messages = [];
-    chatArea.querySelectorAll('.msg').forEach(m => {
-        if (!m.classList.contains('hint')) {
-            messages.push({
-                text: m.textContent,
-                who: m.classList.contains('user') ? 'user' : 'bot'
-            });
-        }
-    });
-    localStorage.setItem('chatHistory', JSON.stringify(messages));
-}
+    function saveHistory() {
+        const messages = [];
+        chatArea.querySelectorAll('.msg').forEach(m => {
+            if (!m.classList.contains('hint')) {
+                messages.push({
+                    text: m.textContent,
+                    who: m.classList.contains('user') ? 'user' : 'bot'
+                });
+            }
+        });
+        localStorage.setItem('chatHistory', JSON.stringify(messages));
+    }
+
     let clickCount = 0;
     let lastClickedMsg = '';
     function onQClick() {
-    const list = CHAT_CONFIG.clickResponses || [];
-    if (list.length === 0) return;
-    // 随机选一条，不重复上一条
-    let msg;
-    do {
-        msg = list[Math.floor(Math.random() * list.length)];
-    } while (msg === lastClickedMsg && list.length > 1);
-    lastClickedMsg = msg;
-    addMsg(msg, 'bot');
-}
+        const list = CHAT_CONFIG.clickResponses || [];
+        if (list.length === 0) return;
+        let msg;
+        do {
+            msg = list[Math.floor(Math.random() * list.length)];
+        } while (msg === lastClickedMsg && list.length > 1);
+        lastClickedMsg = msg;
+        addMsg(msg, 'bot');
+    }
 
     function findResponse(text) {
         const lower = text.toLowerCase();
         for (const item of CHAT_CONFIG.keywords) {
             for (const kw of item.triggers) {
                 if (lower.includes(kw.toLowerCase())) {
-                    const responses = item.responses;
-                    return responses[Math.floor(Math.random() * responses.length)];
+                    return item.responses[Math.floor(Math.random() * item.responses.length)];
                 }
             }
         }
@@ -245,66 +113,42 @@ function saveHistory() {
     function sendMessage() {
         const text = inputBox.value.trim();
         if (!text) return;
-
         addMsg(text, 'user');
         inputBox.value = '';
-
-        const delay = 500 + Math.random() * 1000;
         setTimeout(() => {
             const reply = findResponse(text);
             addMsg(reply, 'bot');
-        }, delay);
+        }, 500 + Math.random() * 1000);
     }
 
     inputBox.addEventListener('keypress', e => {
         if (e.key === 'Enter') sendMessage();
     });
 
-    // 恢复历史记录
-const saved = localStorage.getItem('chatHistory');
-if (saved) {
-    const messages = JSON.parse(saved);
-    const hint = chatArea.querySelector('.hint');
-    if (hint) hint.remove();
-    messages.forEach(m => addMsg(m.text, m.who));
-} else {
-    // 初始问候
-   setTimeout(() => {
-    const greeting = CHAT_CONFIG.greeting || 'Hello Hello';
-    addMsg(greeting, 'bot');
-}, 500);
-
-// 首次提示 5 秒后消失
-setTimeout(() => {
-    const hint = document.getElementById('firstHint');
-    if (hint) {
-        hint.style.transition = 'opacity 0.5s';
-        hint.style.opacity = '0';
-        setTimeout(() => hint.remove(), 500);
+    // 恢复历史
+    const saved = localStorage.getItem('chatHistory');
+    if (saved) {
+        const hint = chatArea.querySelector('.hint');
+        if (hint) hint.remove();
+        JSON.parse(saved).forEach(m => addMsg(m.text, m.who));
+    } else {
+        // 初始问候
+        setTimeout(() => {
+            const greeting = CHAT_CONFIG.greeting || '嗨～';
+            addMsg(greeting, 'bot');
+        }, 500);
     }
-}, 5000);
-</script>
 
-<div id="firstHint" style="
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    border: 3px solid #8b4513;
-    border-radius: 12px;
-    padding: 25px 30px;
-    max-width: 320px;
-    text-align: center;
-    z-index: 200;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-">
-    <h3 style="color: #8b4513; margin-bottom: 15px;">💡 怎么和我聊天</h3>
-    <p style="margin-bottom: 8px; color: #555;">📝 在下面输入框打字</p >
-    <p style="margin-bottom: 8px; color: #555;">👆 点左上角的我</p >
-    <p style="margin-bottom: 8px; color: #555;">😊 试试说"你好"、"想你了"</p >
-    <p style="color: #999; font-size: 12px; margin-top: 12px;">5 秒后自动消失</p >
-</div>
+    // 首次提示 5 秒后消失
+    setTimeout(() => {
+        const hint = document.getElementById('firstHint');
+        if (hint) {
+            hint.style.transition = 'opacity 0.5s';
+            hint.style.opacity = '0';
+            setTimeout(() => hint.remove(), 500);
+        }
+    }, 5000);
+</script>
 
 </body>
 </html>
