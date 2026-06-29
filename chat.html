@@ -194,13 +194,26 @@
     const inputBox = document.getElementById('inputBox');
 
     function addMsg(text, who) {
-        const div = document.createElement('div');
-        div.className = 'msg ' + who;
-        div.textContent = text;
-        chatArea.appendChild(div);
-        chatArea.scrollTop = chatArea.scrollHeight;
-    }
+    const div = document.createElement('div');
+    div.className = 'msg ' + who;
+    div.textContent = text;
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    saveHistory();
+}
 
+function saveHistory() {
+    const messages = [];
+    chatArea.querySelectorAll('.msg').forEach(m => {
+        if (!m.classList.contains('hint')) {
+            messages.push({
+                text: m.textContent,
+                who: m.classList.contains('user') ? 'user' : 'bot'
+            });
+        }
+    });
+    localStorage.setItem('chatHistory', JSON.stringify(messages));
+}
     let clickCount = 0;
     function onQClick() {
         clickCount++;
@@ -242,10 +255,20 @@
         if (e.key === 'Enter') sendMessage();
     });
 
+    // 恢复历史记录
+const saved = localStorage.getItem('chatHistory');
+if (saved) {
+    const messages = JSON.parse(saved);
+    const hint = chatArea.querySelector('.hint');
+    if (hint) hint.remove();
+    messages.forEach(m => addMsg(m.text, m.who));
+} else {
+    // 初始问候
     setTimeout(() => {
         const greeting = CHAT_CONFIG.greeting || '嗨～';
         addMsg(greeting, 'bot');
     }, 500);
+}
 </script>
 
 </body>
