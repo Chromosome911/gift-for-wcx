@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>致 wcx</title>
+    <title>To Tracy</title>
     <style>
         * {
             margin: 0;
@@ -111,7 +111,7 @@
         <input type="text" id="passwordInput" placeholder="输入密码" autocomplete="off">
         <button onclick="checkPassword()">解 锁</button>
         <p class="message" id="message"></p >
-        <p class="hint">提示：她和你都记得的</p >
+        <p class="hint">ps:你知道的</p >
     </div>
 
     <script>
@@ -124,7 +124,7 @@
             if (input === correctPassword) {
                 window.location.href = "https://www.baidu.com";
             } else {
-                message.textContent = "密码不对哦～再想想";
+                message.textContent = "密码不对哦，再想想";
                 message.classList.add('show');
                 document.getElementById('passwordInput').value = '';
                 
