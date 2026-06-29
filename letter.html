@@ -217,8 +217,9 @@
 <script>
     // 计算日期
     const DEPART_DATE = new Date('2026-09-01');
-    const NOW = new Date();
-    const today = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate());
+    // 北京时间今天
+    const bjNow = new Date(Date.now() + 8 * 3600 * 1000);
+    const today = new Date(bjNow.getUTCFullYear(), bjNow.getUTCMonth(), bjNow.getUTCDate());
     const departDay = new Date(DEPART_DATE.getFullYear(), DEPART_DATE.getMonth(), DEPART_DATE.getDate());
     const diffDays = Math.floor((today - departDay) / (1000 * 60 * 60 * 24));
 
@@ -241,8 +242,9 @@
         distanceText.textContent = '已出发 ' + diffDays + ' 天';
     }
 
-    // 显示今天日期
-    document.getElementById('todayDate').textContent = today.toISOString().slice(0, 10);
+    // 用北京时区显示今天日期
+    const bjNow = new Date(Date.now() + 8 * 3600 * 1000);
+    document.getElementById('todayDate').textContent = bjNow.getUTCFullYear() + '-' + String(bjNow.getUTCMonth() + 1).padStart(2, '0') + '-' + String(bjNow.getUTCDate()).padStart(2, '0');
 
     // 随机不重复
     const STORAGE_KEY = 'letter_used_idx';
