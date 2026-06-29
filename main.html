@@ -14,87 +14,23 @@
             font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
         }
 
-        /* ========== 密码门 ========== */
-        #passwordPage {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #passwordPage.hidden { display: none; }
-
-        .pwd-box {
-            background: white;
-            padding: 50px 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .pwd-box h1 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-        .pwd-box .sub {
-            color: #999;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-        .pwd-box input {
-            width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            outline: none;
-            text-align: center;
-        }
-        .pwd-box input:focus { border-color: #667eea; }
-        .pwd-box button {
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            letter-spacing: 2px;
-        }
-        .pwd-msg {
-            margin-top: 15px;
-            color: #ff6b6b;
-            font-size: 14px;
-            min-height: 20px;
-        }
-
         /* ========== 主页 ========== */
         #mainPage {
             width: 100%;
             height: 100%;
             background: url('images/bg.jpg') center/cover no-repeat;
-            display: none;
+            display: block;
             position: relative;
         }
-        #mainPage.active { display: block; }
 
         /* ========== 木纹框通用样式 ========== */
         .wood-frame {
             background:
-                /* 木板纹路 */
                 repeating-linear-gradient(90deg,
                     rgba(139, 90, 43, 0.15) 0px,
                     rgba(139, 90, 43, 0.15) 1px,
                     transparent 1px,
                     transparent 4px),
-                /* 木头底色 */
                 linear-gradient(180deg,
                     #d4a76a 0%,
                     #c8945a 30%,
@@ -103,10 +39,8 @@
             border: 4px solid #6b4423;
             border-radius: 6px;
             box-shadow:
-                /* 铆钉效果 */
                 inset 0 1px 0 rgba(255, 255, 255, 0.3),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-                /* 外阴影 */
                 0 8px 20px rgba(0, 0, 0, 0.4);
             color: #5c3317;
             font-weight: bold;
@@ -115,7 +49,6 @@
             transition: all 0.2s;
         }
 
-        /* 铆钉（4 个角） */
         .wood-frame::before,
         .wood-frame::after {
             content: '';
@@ -129,7 +62,6 @@
         .wood-frame::before { top: 4px; left: 4px; }
         .wood-frame::after { top: 4px; right: 4px; }
 
-        /* ========== 标题框 ========== */
         .title {
             position: absolute;
             top: 5%;
@@ -140,7 +72,6 @@
             letter-spacing: 8px;
         }
 
-        /* ========== 三个按钮 ========== */
         .menu {
             position: absolute;
             bottom: 12%;
@@ -167,4 +98,118 @@
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, 0.4),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-       
+                0 12px 25px rgba(0, 0, 0, 0.5);
+        }
+        .btn:active { transform: translateY(-2px); }
+
+        .btn-icon {
+            margin-top: 6px;
+            font-size: 16px;
+            color: #8b4513;
+        }
+
+        .scene {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(135, 206, 235, 0.96);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .scene.active { display: flex; }
+
+        .scene-content {
+            max-width: 600px;
+            width: 90%;
+            max-height: 75vh;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 10px;
+            border: 4px solid #8b4513;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            color: #333;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .scene-content h2 {
+            color: #8b4513;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%);
+            border: 3px solid #6b4423;
+            color: #5c3317;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 6px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 主页 -->
+    <div id="mainPage">
+        <div class="title wood-frame">To Tracy</div>
+
+        <div class="menu">
+            <div class="btn wood-frame" onclick="showScene('letter')">
+                留言
+                <span class="btn-icon">⭐</span>
+            </div>
+            <div class="btn wood-frame" onclick="showScene('game')">
+                小游戏
+                <span class="btn-icon">🍃</span>
+            </div>
+            <div class="btn wood-frame" onclick="showScene('chat')">
+                聊天
+                <span class="btn-icon">❤️</span>
+            </div>
+        </div>
+
+        <div class="scene" id="letter">
+            <button class="back-btn" onclick="hideScene()">← 返回</button>
+            <div class="scene-content">
+                <h2>📜 留言</h2>
+                <p>这里写你的留言内容。</p >
+            </div>
+        </div>
+
+        <div class="scene" id="game">
+            <button class="back-btn" onclick="hideScene()">← 返回</button>
+            <div class="scene-content">
+                <h2>🐍 小游戏</h2>
+                <p>贪吃蛇放在这里。</p >
+            </div>
+        </div>
+
+        <div class="scene" id="chat">
+            <button class="back-btn" onclick="hideScene()">← 返回</button>
+            <div class="scene-content">
+                <h2>🧑 Q版的我</h2>
+                <p>Q版对话模式放在这里。</p >
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScene(id) {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+        function hideScene() {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+        }
+    </script>
+</body>
+</html>
