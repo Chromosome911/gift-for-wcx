@@ -481,7 +481,7 @@
             }
         });
 
-        foods.forEach(food) {
+        foods.forEach(food) => {
             const img = images['food-' + food.type];
             if (img && img.complete) {
                 ctx.drawImage(img, food.x * CELL_SIZE, food.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
