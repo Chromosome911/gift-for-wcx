@@ -269,12 +269,42 @@ if (saved) {
     messages.forEach(m => addMsg(m.text, m.who));
 } else {
     // 初始问候
-    setTimeout(() => {
-        const greeting = CHAT_CONFIG.greeting || '嗨～';
-        addMsg(greeting, 'bot');
-    }, 500);
-}
+   setTimeout(() => {
+    const greeting = CHAT_CONFIG.greeting || 'Hello Hello';
+    addMsg(greeting, 'bot');
+}, 500);
+
+// 首次提示 5 秒后消失
+setTimeout(() => {
+    const hint = document.getElementById('firstHint');
+    if (hint) {
+        hint.style.transition = 'opacity 0.5s';
+        hint.style.opacity = '0';
+        setTimeout(() => hint.remove(), 500);
+    }
+}, 5000);
 </script>
+
+<div id="firstHint" style="
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 3px solid #8b4513;
+    border-radius: 12px;
+    padding: 25px 30px;
+    max-width: 320px;
+    text-align: center;
+    z-index: 200;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+">
+    <h3 style="color: #8b4513; margin-bottom: 15px;">💡 怎么和我聊天</h3>
+    <p style="margin-bottom: 8px; color: #555;">📝 在下面输入框打字</p >
+    <p style="margin-bottom: 8px; color: #555;">👆 点左上角的我</p >
+    <p style="margin-bottom: 8px; color: #555;">😊 试试说"你好"、"想你了"</p >
+    <p style="color: #999; font-size: 12px; margin-top: 12px;">5 秒后自动消失</p >
+</div>
 
 </body>
 </html>
