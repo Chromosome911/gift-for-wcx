@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Tracy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+
+        /* ========== 密码门 ========== */
+        #passwordPage {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #passwordPage.hidden { display: none; }
+
+        .pwd-box {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .pwd-box h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .pwd-box .sub {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .pwd-box input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            outline: none;
+            text-align: center;
+        }
+        .pwd-box input:focus { border-color: #667eea; }
+        .pwd-box button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            letter-spacing: 2px;
+        }
+        .pwd-msg {
+            margin-top: 15px;
+            color: #ff6b6b;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        /* ========== 主页 ========== */
+        #mainPage {
+            width: 100%;
+            height: 100%;
+            background: url('images/bg.jpg') center/cover no-repeat;
+            display: none;
+            position: relative;
+        }
+        #mainPage.active { display: block; }
+
+        /* ========== 木纹框通用样式 ========== */
+        .wood-frame {
+            background:
+                /* 木板纹路 */
+                repeating-linear-gradient(90deg,
+                    rgba(139, 90, 43, 0.15) 0px,
+                    rgba(139, 90, 43, 0.15) 1px,
+                    transparent 1px,
+                    transparent 4px),
+                /* 木头底色 */
+                linear-gradient(180deg,
+                    #d4a76a 0%,
+                    #c8945a 30%,
+                    #b8864a 70%,
+                    #a87838 100%);
+            border: 4px solid #6b4423;
+            border-radius: 6px;
+            box-shadow:
+                /* 铆钉效果 */
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                /* 外阴影 */
+                0 8px 20px rgba(0, 0, 0, 0.4);
+            color: #5c3317;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        /* 铆钉（4 个角） */
+        .wood-frame::before,
+        .wood-frame::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #4a2c1a 30%, #6b4423 70%);
+            border-radius: 50%;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+        .wood-frame::before { top: 4px; left: 4px; }
+        .wood-frame::after { top: 4px; right: 4px; }
+
+        /* ========== 标题框 ========== */
+        .title {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 18px 50px;
+            font-size: 36px;
+            letter-spacing: 8px;
+        }
+
+        /* ========== 三个按钮 ========== */
+        .menu {
+            position: absolute;
+            bottom: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 25px;
+        }
+
+        .btn {
+            width: 140px;
+            height: 110px;
+            font-size: 24px;
+            letter-spacing: 4px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+       
