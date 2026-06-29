@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>留言 - 9月1日</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 50%, #FFE4B5 100%);
+            padding: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #8b4513;
+            color: #5c3317;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #5c3317;
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+      
+        .countdown {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #8b4513;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown .label {
+            color: #8b4513;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .countdown .number {
+            font-size: 64px;
+            color: #5c3317;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .countdown .unit {
+            color: #8b4513;
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        .countdown .day {
+            font-size: 16px;
+            color: #8b4513;
+            margin-top: 10px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #8b4513;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-title {
+            color: #8b4513;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #d4a76a;
+        }
+
+        .main-tip {
+            font-size: 20px;
+            color: #5c3317;
+            line-height: 1.6;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: 500;
+        }
+
+        .your-words {
+            background: #FFF8DC;
+            border: 2px dashed #d4a76a;
+            border-radius: 8px;
+            padding: 20px;
+            color: #5c3317;
+            font-size: 15px;
+            line-height: 1.8;
+            min-height: 120px;
+            outline: none;
+        }
+
+        .your-words:focus {
+            border-color: #8b4513;
+            background: #FFFACD;
+        }
+
+        .your-words:empty:before {
+            content: attr(data-placeholder);
+            color: #ccc;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .stat-row:last-child { border-bottom: none; }
+
+        .stat-label { color: #8b4513; }
+        .stat-value { color: #5c3317; font-weight: bold; }
+
+        .event-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            color: #5c3317;
+        }
+
+        .event-item:last-child { border-bottom: none; }
+
+        .event-name { color: #8b4513; font-weight: bold; }
+    </style>
+    </head>
+<body>
+    <a href=" " class="back-link">← 返回</a >
+
+    <div class="container">
+        <h1>📜 留言</h1>
+
+        <div class="countdown">
+            <div class="label">距 Tracy 离开美国</div>
+            <div class="number" id="daysNumber">0</div>
+            <div class="unit">天</div>
+            <div class="day" id="dayLabel">第 1 天</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">✨ 今日份</div>
+            <div class="main-tip" id="todayTip">加载中...</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">💝 记得</div>
+            <div id="reminderArea" class="your-words" contenteditable="true" data-placeholder="在这里写下你想让她记得的话（100字左右）"></div>
+        </div>
+        </head>
+<body>
+    <a href=" " class="back-link">← 返回</a >
+
+    <div class="container">
+        <h1>📜 留言</h1>
+
+        <div class="countdown">
+            <div class="label">距 Tracy 离开美国</div>
+            <div class="number" id="daysNumber">0</div>
+            <div class="unit">天</div>
+            <div class="day" id="dayLabel">第 1 天</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">✨ 今日份</div>
+            <div class="main-tip" id="todayTip">加载中...</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">💝 记得</div>
+            <div id="reminderArea" class="your-words" contenteditable="true" data-placeholder="在这里写下你想让她记得的话（100字左右）"></div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">📊 数据</div>
+            <div class="stat-row">
+                <span class="stat-label">📅 今天</span>
+                <span class="stat-value" id="todayDate">2026-06-29</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">⏰ 距离</span>
+                <span class="stat-value" id="distanceText">0 天</span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">🏠 你的话</div>
+            <div class="your-words" style="border-style: solid; min-height: 60px;">
+                Tracy：<br>
+                （这里填你想对她说的话）
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">📅 重要日子</div>
+            <div class="event-item">
+                <span class="event-name">出发</span> - 09月01日
+            </div>
+            <div class="event-item">
+                <span class="event-name">圣诞</span> - 12月25日
+            </div>
+  
+            <div class="event-item">
+                <span class="event-name">生日</span> - 02月13日
+            </div>
+      
+        </div>
+    </div>
+
+    <script src="letter-messages.js"></script>
+    
+<script>
+    // 计算日期
+    const DEPART_DATE = new Date('2026-09-01');
+    const NOW = new Date();
+    const today = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate());
+    const departDay = new Date(DEPART_DATE.getFullYear(), DEPART_DATE.getMonth(), DEPART_DATE.getDate());
+    const diffDays = Math.floor((today - departDay) / (1000 * 60 * 60 * 24));
+
+    // 显示倒计时
+    const daysNumber = document.getElementById('daysNumber');
+    const dayLabel = document.getElementById('dayLabel');
+    const distanceText = document.getElementById('distanceText');
+
+    if (diffDays < 0) {
+        daysNumber.textContent = Math.abs(diffDays);
+        dayLabel.textContent = '还没出发';
+        distanceText.textContent = '还有 ' + Math.abs(diffDays) + ' 天';
+    } else if (diffDays === 0) {
+        daysNumber.textContent = '0';
+        dayLabel.textContent = '今天出发';
+        distanceText.textContent = '出发日';
+    } else {
+        daysNumber.textContent = diffDays;
+        dayLabel.textContent = '第 ' + diffDays + ' 天';
+        distanceText.textContent = '已出发 ' + diffDays + ' 天';
+    }
+
+    // 显示今天日期
+    document.getElementById('todayDate').textContent = today.toISOString().slice(0, 10);
+
+    // 随机不重复
+    const STORAGE_KEY = 'letter_used_idx';
+
+    function getUnusedIndices(needCount) {
+        let used = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        let available = [];
+        for (let i = 0; i < MESSAGES.length; i++) {
+            if (!used.includes(i)) available.push(i);
+        }
+        if (available.length < needCount) {
+            used = [];
+            available = Array.from({length: MESSAGES.length}, (_, i) => i);
+        }
+        const result = [];
+        for (let n = 0; n < needCount && available.length > 0; n++) {
+            const idx = Math.floor(Math.random() * available.length);
+            result.push(available[idx]);
+            available.splice(idx, 1);
+        }
+        const newUsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]').concat(result);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newUsed));
+        return result;
+    }
+
+    // 今日份
+    const todayIndices = getUnusedIndices(1);
+    const todayContent = MESSAGES[todayIndices[0]];
+
+    document.getElementById('todayTip').innerHTML = `
+        <div style="font-size:18px; margin-bottom:8px; color:#8b4513;">${todayContent.type === 'tip' ? '💡 小贴士' : todayContent.type === 'wish' ? '💝 祝福' : '✨ 金句'}</div>
+        <div style="font-size:20px; line-height:1.6;">${todayContent.text}</div>
+        ${todayContent.author ? '<div style="font-size:14px; color:#999; margin-top:10px;">—— ' + todayContent.author + '</div>' : ''}
+    `;
+
+    // 记得列表（保存到 localStorage）
+    const reminderArea = document.getElementById('reminderArea');
+    const SAVED_REMINDER = 'letter_reminder';
+    const saved = localStorage.getItem(SAVED_REMINDER);
+    if (saved) {
+        reminderArea.innerHTML = saved;
+    }
+    reminderArea.addEventListener('blur', function() {
+        localStorage.setItem(SAVED_REMINDER, this.innerHTML);
+    });
+</script>
+
+</body>
+</html>
