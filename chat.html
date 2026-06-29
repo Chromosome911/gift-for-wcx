@@ -215,13 +215,18 @@ function saveHistory() {
     localStorage.setItem('chatHistory', JSON.stringify(messages));
 }
     let clickCount = 0;
+    let lastClickedMsg = '';
     function onQClick() {
-        clickCount++;
-        const list = CHAT_CONFIG.clickResponses || [];
-        if (list.length === 0) return;
-        const msg = list[clickCount % list.length];
-        addMsg(msg, 'bot');
-    }
+    const list = CHAT_CONFIG.clickResponses || [];
+    if (list.length === 0) return;
+    // 随机选一条，不重复上一条
+    let msg;
+    do {
+        msg = list[Math.floor(Math.random() * list.length)];
+    } while (msg === lastClickedMsg && list.length > 1);
+    lastClickedMsg = msg;
+    addMsg(msg, 'bot');
+}
 
     function findResponse(text) {
         const lower = text.toLowerCase();
