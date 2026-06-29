@@ -26,7 +26,7 @@
 </head>
 <body>
 
-<a href=" " class="back-link">← 返回</a >
+<a href="main.html " class="back-link">← 返回</a >
 
 <div class="title-bar">💬 和我聊天</div>
 
@@ -117,7 +117,7 @@
         JSON.parse(saved).forEach(m => addMsg(m.text, m.who));
     } else {
         setTimeout(() => {
-            const greeting = CHAT_CONFIG.greeting || '嗨～';
+            const greeting = CHAT_CONFIG.greeting || 'hello hello';
             addMsg(greeting, 'bot');
         }, 500);
     }
