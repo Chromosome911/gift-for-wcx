@@ -160,7 +160,7 @@
         <h1>📜 留言</h1>
 
         <div class="countdown">
-            <div class="label">距 Tracy 离开美国</div>
+            <div class="label">距 Tracy 离开美国 <span style="font-size:13px; color:#a0a0a0;">(美国时间)</span></div>
             <div class="number" id="daysNumber">0</div>
             <div class="unit">天</div>
             <div class="day" id="dayLabel">第 1 天</div>
@@ -217,11 +217,11 @@
         const DEPART_DATE_STR = '2026-09-01';  // 出发日期，改这一行就行
 
         // 拿当前北京时间的年月日
-        const bjNow = new Date(Date.now() + 8 * 3600 * 1000);
-        const bjYear = bjNow.getUTCFullYear();
-        const bjMonth = bjNow.getUTCMonth();
-        const bjDay = bjNow.getUTCDate();
-        const today = new Date(bjYear, bjMonth, bjDay);
+        const nyNow = new Date(Date.now() - 4 * 3600 * 1000);  // 夏令时 UTC-4
+        const nyYear = nyNow.getUTCFullYear();
+        const nyMonth = nyNow.getUTCMonth();
+        const nyDay = nyNow.getUTCDate();
+        const today = new Date(nyYear, nyMonth, nyDay);
 
         // 出发日
         const [dY, dM, dD] = DEPART_DATE_STR.split('-').map(Number);
@@ -250,7 +250,7 @@
         }
 
         // 显示今天日期（也用北京时区）
-        document.getElementById('todayDate').textContent = bjYear + '-' + String(bjMonth + 1).padStart(2, '0') + '-' + String(bjDay).padStart(2, '0');
+        document.getElementById('todayDate').textContent = nyYear + '-' + String(nyMonth + 1).padStart(2, '0') + '-' + String(nyDay).padStart(2, '0');
 
         // 随机不重复
         const STORAGE_KEY = 'letter_used_idx';
