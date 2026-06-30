@@ -4,8 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>留言 - 9月1日</title>
+   <title>留言 - 9月1日</title>
     <style>
+        /* ========== 加载动画 ========== */
+        #loadingScreen {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #loadingScreen.fade-out { opacity: 0; visibility: hidden; }
+        .loading-text {
+            color: #5c3317;
+            font-size: 18px;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+        .loading-dots { display: flex; gap: 8px; }
+        .loading-dot {
+            width: 10px; height: 10px;
+            background: #8b4513;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+        .loading-dot:nth-child(1) { animation-delay: 0s; }
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ========== 内容淡入 ========== */
+        body {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        body.loaded { opacity: 1; }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body {
@@ -154,7 +195,18 @@
     </style>
 </head>
 <body>
-    <a href="main.html" class="back-link">← 返回</a >
+
+<!-- 加载层 -->
+<div id="loadingScreen">
+    <div class="loading-text">正在打开这封信...</div>
+    <div class="loading-dots">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+    </div>
+</div>
+
+<a href="main.html" class="back-link">
 
     <div class="container">
         <h1>📜 留言</h1>
@@ -348,7 +400,16 @@ fetch('letter-messages.txt')
         }
         reminderArea.addEventListener('blur', function() {
             localStorage.setItem(SAVED_REMINDER, this.innerHTML);
-        });
-    </script>
+           });
+
+    // 加载完成后淡入
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const ls = document.getElementById('loadingScreen');
+            if (ls) ls.classList.add('fade-out');
+            document.body.classList.add('loaded');
+        }, 600);
+    });
+</script>
 </body>
 </html>
