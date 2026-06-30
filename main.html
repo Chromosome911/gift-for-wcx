@@ -154,6 +154,66 @@
             border-radius: 6px;
             z-index: 100;
         }
+    /* ===== 响应式:手机 ===== */
+@media (max-width: 767px) {
+    .title {
+        font-size: 22px;
+        letter-spacing: 4px;
+        padding: 12px 30px;
+        top: 4%;
+    }
+    
+    .menu {
+        bottom: 8%;
+        gap: 15px;
+        width: 90%;
+        max-width: 360px;
+    }
+    
+    .btn {
+        width: 100px;
+        height: 85px;
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+    
+    .btn-icon {
+        font-size: 14px;
+    }
+    
+    .scene-content {
+        padding: 25px 20px;
+        font-size: 15px;
+    }
+    
+    .scene-content h2 {
+        font-size: 20px;
+    }
+}
+
+/* ===== 响应式:小屏手机 ===== */
+@media (max-width: 380px) {
+    .menu {
+        gap: 10px;
+    }
+    .btn {
+        width: 85px;
+        height: 75px;
+        font-size: 16px;
+    }
+}
+
+/* ===== 响应式:电脑大屏 ===== */
+@media (min-width: 1200px) {
+    .title {
+        font-size: 42px;
+    }
+    .btn {
+        width: 160px;
+        height: 130px;
+        font-size: 28px;
+    }
+}
     </style>
 </head>
 <body>
