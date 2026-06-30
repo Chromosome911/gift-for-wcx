@@ -14,6 +14,53 @@
         @keyframes msgIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .msg.bot { align-self: flex-start; background: white; border: 2px solid #8b4513; border-radius: 4px 12px 12px 12px; color: #5c3317; }
         .msg.user { align-self: flex-end; background: #95EC69; color: #333; border-radius: 12px 4px 12px 12px; }
+                /* bot 消息容器:头像 + 气泡 */
+        .bot-msg-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            max-width: 85%;
+            align-self: flex-start;
+            animation: msgIn 0.3s ease-out;
+        }
+        .bot-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #8b4513;
+            background: white;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .bot-msg-wrap .msg.bot {
+            margin-left: 0;
+        }
+
+        /* 打字中气泡 */
+        .typing-bubble {
+            align-self: flex-start;
+            background: white;
+            border: 2px solid #8b4513;
+            border-radius: 4px 12px 12px 12px;
+            padding: 14px 18px;
+            display: inline-flex;
+            gap: 5px;
+            align-items: center;
+        }
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #8b4513;
+            border-radius: 50%;
+            animation: typingBounce 1.2s infinite ease-in-out;
+        }
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
         #inputArea { display: flex; gap: 8px; padding: 12px; background: rgba(255, 255, 255, 0.95); border-top: 2px solid #8b4513; }
         #inputBox { flex: 1; padding: 10px 14px; border: 2px solid #d4a76a; border-radius: 20px; outline: none; font-size: 15px; background: white; }
         #sendBtn { padding: 10px 20px; background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%); border: 2px solid #6b4423; color: #5c3317; cursor: pointer; border-radius: 20px; font-weight: bold; font-size: 14px; }
@@ -55,10 +102,27 @@ function addMsg(text, who) {
     }
     
     // 2. 渲染到 DOM
-    const div = document.createElement('div');
-    div.className = 'msg ' + who;
-    div.textContent = text;
-    chatArea.appendChild(div);
+    if (who === 'bot') {
+        // bot 消息:头像 + 气泡横排
+        const wrap = document.createElement('div');
+        wrap.className = 'bot-msg-wrap';
+        const avatar = document.createElement('img');
+        avatar.className = 'bot-avatar';
+        avatar.src = 'v-version.jpg';
+        avatar.alt = '我';
+        const div = document.createElement('div');
+        div.className = 'msg ' + who;
+        div.textContent = text;
+        wrap.appendChild(avatar);
+        wrap.appendChild(div);
+        chatArea.appendChild(wrap);
+    } else {
+        // user 消息:单纯气泡
+        const div = document.createElement('div');
+        div.className = 'msg ' + who;
+        div.textContent = text;
+        chatArea.appendChild(div);
+    }
     
     // 3. 限制 DOM 最多 50 条
     const domMsgs = chatArea.querySelectorAll('.msg');
@@ -70,6 +134,30 @@ function addMsg(text, who) {
     
     chatArea.scrollTop = chatArea.scrollHeight;
     if (!isLoadingHistory) saveHistory();
+}
+
+// 显示打字中动画
+function showTyping() {
+    const wrap = document.createElement('div');
+    wrap.className = 'bot-msg-wrap';
+    wrap.id = 'typingWrap';
+    const avatar = document.createElement('img');
+    avatar.className = 'bot-avatar';
+    avatar.src = 'v-version.jpg';
+    avatar.alt = '我';
+    const bubble = document.createElement('div');
+    bubble.className = 'typing-bubble';
+    bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    wrap.appendChild(avatar);
+    wrap.appendChild(bubble);
+    chatArea.appendChild(wrap);
+    chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+// 移除打字中动画
+function hideTyping() {
+    const t = document.getElementById('typingWrap');
+    if (t) t.remove();
 }
 
 function saveHistory() {
@@ -85,8 +173,12 @@ function saveHistory() {
     const list = CHAT_CONFIG.clickResponses || [];
     if (list.length === 0) return;
     let msg;
-    msg = list[Math.floor(Math.random() * list.length)];
-    addMsg(msg, 'bot');
+        msg = list[Math.floor(Math.random() * list.length)];
+    showTyping();
+    setTimeout(() => {
+        hideTyping();
+        addMsg(msg, 'bot');
+    }, 800 + Math.random() * 700);
 }
 
     function findResponse(text) {
@@ -107,10 +199,12 @@ function saveHistory() {
         if (!text) return;
         addMsg(text, 'user');
         inputBox.value = '';
+                showTyping();
         setTimeout(() => {
+            hideTyping();
             const reply = findResponse(text);
             addMsg(reply, 'bot');
-        }, 500 + Math.random() * 1000);
+        }, 800 + Math.random() * 700);
     }
 
     inputBox.addEventListener('keypress', e => {
