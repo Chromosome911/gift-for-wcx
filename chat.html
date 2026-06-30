@@ -246,5 +246,25 @@ if (saved) {
 }
 </script>
 
+<audio id="bgmOther" loop preload="auto">
+  <source src="Pelican town.ogg" type="audio/ogg">
+</audio>
+<button class="music-btn" id="musicBtnOther" title="播放/暂停音乐">🔊</button>
+<script>
+const bgmOther = document.getElementById('bgmOther');
+const musicBtnOther = document.getElementById('musicBtnOther');
+const MUSIC_KEY2 = 'bgm_playing_other';
+function tryPlayOther() {
+  bgmOther.volume = 0.3;
+  bgmOther.play().then(() => {
+    localStorage.setItem(MUSIC_KEY2, '1');
+  }).catch(() => {});
+}
+musicBtnOther.addEventListener('click', () => {
+  if (bgmOther.paused) { tryPlayOther(); musicBtnOther.textContent = '🔊'; }
+  else { bgmOther.pause(); musicBtnOther.textContent = '🔇'; }
+});
+if (localStorage.getItem(MUSIC_KEY2) === '1') tryPlayOther();
+</script>
 </body>
 </html>
