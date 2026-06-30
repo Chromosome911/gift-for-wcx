@@ -44,15 +44,16 @@
 <script>
     const chatArea = document.getElementById('chatArea');
     const inputBox = document.getElementById('inputBox');
+    let isLoadingHistory = false;
 
     function addMsg(text, who) {
-        const div = document.createElement('div');
-        div.className = 'msg ' + who;
-        div.textContent = text;
-        chatArea.appendChild(div);
-        chatArea.scrollTop = chatArea.scrollHeight;
-        saveHistory();
-    }
+    const div = document.createElement('div');
+    div.className = 'msg ' + who;
+    div.textContent = text;
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    if (!isLoadingHistory) saveHistory();
+}
 
     function saveHistory() {
         const messages = [];
@@ -109,16 +110,18 @@
     let lastClickedMsg = '';
 
     const saved = localStorage.getItem('chatHistory');
-    if (saved) {
-        const hint = chatArea.querySelector('.hint');
-        if (hint) hint.remove();
-        JSON.parse(saved).forEach(m => addMsg(m.text, m.who));
-    } else {
-        setTimeout(() => {
-            const greeting = CHAT_CONFIG.greeting || 'hello hello';
-            addMsg(greeting, 'bot');
-        }, 500);
-    }
+if (saved) {
+    const hint = chatArea.querySelector('.hint');
+    if (hint) hint.remove();
+    isLoadingHistory = true;
+    JSON.parse(saved).forEach(m => addMsg(m.text, m.who));
+    isLoadingHistory = false;
+} else {
+    setTimeout(() => {
+        const greeting = CHAT_CONFIG.greeting || 'hello hello';
+        addMsg(greeting, 'bot');
+    }, 500);
+}
 </script>
 
 </body>
