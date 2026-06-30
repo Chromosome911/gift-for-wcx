@@ -172,7 +172,7 @@
         </div>
 
         <div class="card">
-            <div class="card-title">💝 记得</div>
+            <div class="card-title">💝 要记得</div>
             <div id="reminderArea" class="your-words">
                Tracy,
                 <br><br>
@@ -267,8 +267,8 @@ function showTodayMessage() {
     const todayContent = MESSAGES[todayIndices[0]];
 
     const typeLabel =
-        todayContent.type === 'tip' ? '💡 小贴士' :
-        todayContent.type === 'wish' ? '💝 祝福' :
+        todayContent.type === 'tip' ? '💡 小贴士（带tip前缀的不要采纳！）' :
+        todayContent.type === 'wish' ? '💝 祝福（以及闲聊）' :
         '✨ 金句';
 
     document.getElementById('todayTip').innerHTML = `
