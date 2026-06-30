@@ -206,9 +206,10 @@
     </div>
 </div>
 
-<a href="main.html" class="back-link">
+<a href=" " class="back-link">← 返回</a >
 
-    <div class="container">
+     <div class="container">
+        <a href=" " class="back-link">← 返回</a >
         <h1>📜 留言</h1>
 
         <div class="countdown">
@@ -225,7 +226,7 @@
 
         <div class="card">
             <div class="card-title">💝 要记得</div>
-            <div id="reminderArea" class="your-words">
+            <div id="reminderRemember" class="your-words">
                Tracy,
                 <br><br>
                 写点什么
@@ -245,7 +246,7 @@
         
         <div class="card">
             <div class="card-title">🏠 你的话</div>
-            <div id="reminderArea" class="your-words">
+            <div id="reminderwords" class="your-words">
                Tracy,
                <br><br>
                 写点什么
@@ -293,6 +294,8 @@ fetch('letter-messages.txt')
 
     function showTodayMessage() {
     if (MESSAGES.length === 0) return;
+
+    const nyNow = new Date(Date.now() - 4 * 3600 * 1000);
 
     const STORAGE_KEY = 'letter_used_idx';
     const STORAGE_DATE = 'letter_last_date';
@@ -354,7 +357,7 @@ fetch('letter-messages.txt')
         const DEPART_DATE_STR = '2026-09-01';  // 出发日期，改这一行就行
 
         // 拿当前北京时间的年月日
-        const nyNow = new Date(Date.now() - 4 * 3600 * 1000);  // 夏令时 UTC-4
+          // 夏令时 UTC-4
         const nyYear = nyNow.getUTCFullYear();
         const nyMonth = nyNow.getUTCMonth();
         const nyDay = nyNow.getUTCDate();
