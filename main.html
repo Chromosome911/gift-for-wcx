@@ -67,6 +67,144 @@
             display: block;
             position: relative;
         }
+            /* 功能介绍按钮 */
+        .help-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%);
+            border: 3px solid #6b4423;
+            color: #5c3317;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: transform 0.2s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .help-btn:hover { transform: scale(1.08); }
+        .help-btn:active { transform: scale(0.95); }
+
+        /* 抽屉遮罩 */
+        .help-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .help-overlay.open { opacity: 1; visibility: visible; }
+
+        /* 抽屉 */
+        .help-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 360px;
+            max-width: 85vw;
+            background: linear-gradient(180deg, #faf3e7 0%, #f3e8d3 100%);
+            border-left: 4px solid #8b4513;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+            z-index: 1002;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .help-drawer.open { transform: translateX(0); }
+
+        .help-header {
+            padding: 18px 22px;
+            border-bottom: 2px solid #8b4513;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%);
+            color: #5c3317;
+        }
+        .help-header h3 {
+            font-size: 18px;
+            letter-spacing: 3px;
+        }
+        .help-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: #5c3317;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .help-close:active { background: rgba(255, 255, 255, 0.5); }
+
+        .help-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 22px;
+            color: #5c3317;
+            line-height: 1.8;
+            -webkit-overflow-scrolling: touch;
+        }
+        .help-section {
+            margin-bottom: 28px;
+        }
+        .help-section:last-child { margin-bottom: 0; }
+        .help-section h4 {
+            font-size: 16px;
+            color: #8b4513;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed #c8945a;
+            letter-spacing: 2px;
+        }
+        .help-section p {
+            font-size: 14px;
+            color: #6b4423;
+        }
+        .help-section .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .help-section .feature-list li {
+            padding: 6px 0;
+            font-size: 14px;
+            color: #6b4423;
+        }
+
+        /* 移动端 */
+        @media (max-width: 600px) {
+            .help-btn {
+                top: 16px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            .help-drawer {
+                width: 100%;
+                max-width: 100vw;
+            }
+            .help-body { padding: 20px 18px; }
+        }
     </style>
 </head>
 <body>
@@ -231,6 +369,41 @@
     }
 }
 </style>
+        <!-- 功能介绍按钮 -->
+    <button class="help-btn" id="helpBtn" aria-label="功能介绍">❓</button>
+
+    <!-- 抽屉遮罩 -->
+    <div class="help-overlay" id="helpOverlay"></div>
+
+    <!-- 抽屉 -->
+    <div class="help-drawer" id="helpDrawer">
+        <div class="help-header">
+            <h3>使用说明</h3>
+            <button class="help-close" id="helpClose">×</button>
+        </div>
+        <div class="help-body">
+            <div class="help-section">
+                <h4>📦 这是什么</h4>
+                <p>我给你留了一个小地方。倒计时到你到美国的那天,然后每天多一条。不是告别,是换一种方式继续。</p >
+            </div>
+            <div class="help-section">
+                <h4>⏳ 倒计时</h4>
+                <p>今天是 X 月 X 日。<br>你来美国的第 X 天 / 还有 X 天。<br>每天点开都会变。</p >
+            </div>
+            <div class="help-section">
+                <h4>📜 每日一条</h4>
+                <p>每天解锁一条新的。可能是生活 tip、可能是我想对你说的话、可能是一句歌词。<br>看到喜欢的可以收藏(❤️ 在右上)。</p >
+            </div>
+            <div class="help-section">
+                <h4>🎮 其他功能</h4>
+                <ul class="feature-list">
+                    <li>💬 跟我聊天 — 点头像</li>
+                    <li>🐍 摸鱼小游戏 — 没事可以玩两把</li>
+                    <li>💾 收藏的话 — 本地保存,清缓存会丢</li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div id="loadingScreen">
         <div class="loading-text">正在打开这扇门...</div>
         <div class="loading-dots">
@@ -283,6 +456,27 @@
         </div>
     </div>
 
+            // 功能介绍抽屉
+        const helpBtn = document.getElementById('helpBtn');
+        const helpDrawer = document.getElementById('helpDrawer');
+        const helpOverlay = document.getElementById('helpOverlay');
+        const helpClose = document.getElementById('helpClose');
+
+        function openHelp() {
+            helpDrawer.classList.add('open');
+            helpOverlay.classList.add('open');
+        }
+        function closeHelp() {
+            helpDrawer.classList.remove('open');
+            helpOverlay.classList.remove('open');
+        }
+
+        helpBtn.addEventListener('click', openHelp);
+        helpClose.addEventListener('click', closeHelp);
+        helpOverlay.addEventListener('click', closeHelp);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeHelp();
+        });
     <script>
         function showScene(id) {
             document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
