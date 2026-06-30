@@ -46,13 +46,34 @@
     const inputBox = document.getElementById('inputBox');
     let isLoadingHistory = false;
 
-    function addMsg(text, who) {
+    let allMessages = [];  // 完整历史
+
+function addMsg(text, who) {
+    // 1. 加到完整历史
+    if (!isLoadingHistory) {
+        allMessages.push({ text, who });
+    }
+    
+    // 2. 渲染到 DOM
     const div = document.createElement('div');
     div.className = 'msg ' + who;
     div.textContent = text;
     chatArea.appendChild(div);
+    
+    // 3. 限制 DOM 最多 50 条
+    const domMsgs = chatArea.querySelectorAll('.msg');
+    if (domMsgs.length > 50) {
+        for (let i = 0; i < domMsgs.length - 50; i++) {
+            chatArea.removeChild(domMsgs[i]);
+        }
+    }
+    
     chatArea.scrollTop = chatArea.scrollHeight;
     if (!isLoadingHistory) saveHistory();
+}
+
+function saveHistory() {
+    localStorage.setItem('chatHistory', JSON.stringify(allMessages));
 }
 
     function saveHistory() {
@@ -129,12 +150,14 @@
 }
 
     const saved = localStorage.getItem('chatHistory');
-    
 if (saved) {
     const hint = chatArea.querySelector('.hint');
     if (hint) hint.remove();
+    allMessages = JSON.parse(saved);
     isLoadingHistory = true;
-    JSON.parse(saved).forEach(m => addMsg(m.text, m.who));
+    // 只渲染最后 50 条
+    const showMsgs = allMessages.slice(-50);
+    showMsgs.forEach(m => addMsg(m.text, m.who));
     isLoadingHistory = false;
 } else {
     setTimeout(() => {
