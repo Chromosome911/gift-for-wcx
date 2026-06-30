@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -151,10 +152,9 @@
 
         .event-name { color: #8b4513; font-weight: bold; }
     </style>
-
-        </head>
+</head>
 <body>
-    <a href="main.html" class="back-link">← 返回</a >
+    <a href=" " class="back-link">← 返回</a >
 
     <div class="container">
         <h1>📜 留言</h1>
@@ -172,7 +172,7 @@
         </div>
 
         <div class="card">
-            <div class="card-title">💝 要记得</div>
+            <div class="card-title">💝 记得</div>
             <div id="reminderArea" class="your-words" contenteditable="true" data-placeholder="在这里写下你想让她记得的话（100字左右）"></div>
         </div>
         
@@ -189,7 +189,7 @@
         </div>
         
         <div class="card">
-            <div class="card-title">🏠  一些话</div>
+            <div class="card-title">🏠 你的话</div>
             <div class="your-words" style="border-style: solid; min-height: 60px;">
                 Tracy：<br>
                 （这里填你想对她说的话）
@@ -204,93 +204,98 @@
             <div class="event-item">
                 <span class="event-name">圣诞</span> - 12月25日
             </div>
-  
             <div class="event-item">
                 <span class="event-name">生日</span> - 02月13日
             </div>
-      
         </div>
     </div>
 
     <script src="letter-messages.js"></script>
     
-<script>
-    // 计算日期
-    const DEPART_DATE = new Date('2026-09-01');
-    // 北京时间今天
-    const bjNow = new Date(Date.now() + 8 * 3600 * 1000);
-    const today = new Date(bjNow.getUTCFullYear(), bjNow.getUTCMonth(), bjNow.getUTCDate());
-    const departDay = new Date(DEPART_DATE.getFullYear(), DEPART_DATE.getMonth(), DEPART_DATE.getDate());
-    const diffDays = Math.floor((today - departDay) / (1000 * 60 * 60 * 24));
+    <script>
+        // 计算日期（按北京时区 UTC+8 算，避免服务器时区差异）
+        const DEPART_DATE_STR = '2026-09-01';  // 出发日期，改这一行就行
 
-    // 显示倒计时
-    const daysNumber = document.getElementById('daysNumber');
-    const dayLabel = document.getElementById('dayLabel');
-    const distanceText = document.getElementById('distanceText');
+        // 拿当前北京时间的年月日
+        const bjNow = new Date(Date.now() + 8 * 3600 * 1000);
+        const bjYear = bjNow.getUTCFullYear();
+        const bjMonth = bjNow.getUTCMonth();
+        const bjDay = bjNow.getUTCDate();
+        const today = new Date(bjYear, bjMonth, bjDay);
 
-    if (diffDays < 0) {
-        daysNumber.textContent = Math.abs(diffDays);
-        dayLabel.textContent = '还没出发';
-        distanceText.textContent = '还有 ' + Math.abs(diffDays) + ' 天';
-    } else if (diffDays === 0) {
-        daysNumber.textContent = '0';
-        dayLabel.textContent = '今天出发';
-        distanceText.textContent = '出发日';
-    } else {
-        daysNumber.textContent = diffDays;
-        dayLabel.textContent = '第 ' + diffDays + ' 天';
-        distanceText.textContent = '已出发 ' + diffDays + ' 天';
-    }
+        // 出发日
+        const [dY, dM, dD] = DEPART_DATE_STR.split('-').map(Number);
+        const departDay = new Date(dY, dM - 1, dD);
 
-    // 用北京时区显示今天日期
-    const bjNow = new Date(Date.now() + 8 * 3600 * 1000);
-    document.getElementById('todayDate').textContent = bjNow.getUTCFullYear() + '-' + String(bjNow.getUTCMonth() + 1).padStart(2, '0') + '-' + String(bjNow.getUTCDate()).padStart(2, '0');
+        // 差几天
+        const diffDays = Math.floor((today - departDay) / (1000 * 60 * 60 * 24));
 
-    // 随机不重复
-    const STORAGE_KEY = 'letter_used_idx';
+        // 显示倒计时
+        const daysNumber = document.getElementById('daysNumber');
+        const dayLabel = document.getElementById('dayLabel');
+        const distanceText = document.getElementById('distanceText');
 
-    function getUnusedIndices(needCount) {
-        let used = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        let available = [];
-        for (let i = 0; i < MESSAGES.length; i++) {
-            if (!used.includes(i)) available.push(i);
+        if (diffDays < 0) {
+            daysNumber.textContent = Math.abs(diffDays);
+            dayLabel.textContent = '还没出发';
+            distanceText.textContent = '还有 ' + Math.abs(diffDays) + ' 天';
+        } else if (diffDays === 0) {
+            daysNumber.textContent = '0';
+            dayLabel.textContent = '今天出发';
+            distanceText.textContent = '出发日';
+        } else {
+            daysNumber.textContent = diffDays;
+            dayLabel.textContent = '第 ' + diffDays + ' 天';
+            distanceText.textContent = '已出发 ' + diffDays + ' 天';
         }
-        if (available.length < needCount) {
-            used = [];
-            available = Array.from({length: MESSAGES.length}, (_, i) => i);
+
+        // 显示今天日期（也用北京时区）
+        document.getElementById('todayDate').textContent = bjYear + '-' + String(bjMonth + 1).padStart(2, '0') + '-' + String(bjDay).padStart(2, '0');
+
+        // 随机不重复
+        const STORAGE_KEY = 'letter_used_idx';
+
+        function getUnusedIndices(needCount) {
+            let used = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            let available = [];
+            for (let i = 0; i < MESSAGES.length; i++) {
+                if (!used.includes(i)) available.push(i);
+            }
+            if (available.length < needCount) {
+                used = [];
+                available = Array.from({length: MESSAGES.length}, (_, i) => i);
+            }
+            const result = [];
+            for (let n = 0; n < needCount && available.length > 0; n++) {
+                const idx = Math.floor(Math.random() * available.length);
+                result.push(available[idx]);
+                available.splice(idx, 1);
+            }
+            const newUsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]').concat(result);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(newUsed));
+            return result;
         }
-        const result = [];
-        for (let n = 0; n < needCount && available.length > 0; n++) {
-            const idx = Math.floor(Math.random() * available.length);
-            result.push(available[idx]);
-            available.splice(idx, 1);
+
+        // 今日份
+        const todayIndices = getUnusedIndices(1);
+        const todayContent = MESSAGES[todayIndices[0]];
+
+        document.getElementById('todayTip').innerHTML = `
+            <div style="font-size:18px; margin-bottom:8px; color:#8b4513;">${todayContent.type === 'tip' ? '💡 小贴士' : todayContent.type === 'wish' ? '💝 祝福' : '✨ 金句'}</div>
+            <div style="font-size:20px; line-height:1.6;">${todayContent.text}</div>
+            ${todayContent.author ? '<div style="font-size:14px; color:#999; margin-top:10px;">—— ' + todayContent.author + '</div>' : ''}
+        `;
+
+        // 记得列表（保存到 localStorage）
+        const reminderArea = document.getElementById('reminderArea');
+        const SAVED_REMINDER = 'letter_reminder';
+        const saved = localStorage.getItem(SAVED_REMINDER);
+        if (saved) {
+            reminderArea.innerHTML = saved;
         }
-        const newUsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]').concat(result);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newUsed));
-        return result;
-    }
-
-    // 今日份
-    const todayIndices = getUnusedIndices(1);
-    const todayContent = MESSAGES[todayIndices[0]];
-
-    document.getElementById('todayTip').innerHTML = `
-        <div style="font-size:18px; margin-bottom:8px; color:#8b4513;">${todayContent.type === 'tip' ? '💡 小贴士' : todayContent.type === 'wish' ? '💝 祝福' : '✨ 金句'}</div>
-        <div style="font-size:20px; line-height:1.6;">${todayContent.text}</div>
-        ${todayContent.author ? '<div style="font-size:14px; color:#999; margin-top:10px;">—— ' + todayContent.author + '</div>' : ''}
-    `;
-
-    // 记得列表（保存到 localStorage）
-    const reminderArea = document.getElementById('reminderArea');
-    const SAVED_REMINDER = 'letter_reminder';
-    const saved = localStorage.getItem(SAVED_REMINDER);
-    if (saved) {
-        reminderArea.innerHTML = saved;
-    }
-    reminderArea.addEventListener('blur', function() {
-        localStorage.setItem(SAVED_REMINDER, this.innerHTML);
-    });
-</script>
-
+        reminderArea.addEventListener('blur', function() {
+            localStorage.setItem(SAVED_REMINDER, this.innerHTML);
+        });
+    </script>
 </body>
 </html>
