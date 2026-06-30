@@ -76,18 +76,6 @@ function saveHistory() {
     localStorage.setItem('chatHistory', JSON.stringify(allMessages));
 }
 
-    function saveHistory() {
-        const messages = [];
-        chatArea.querySelectorAll('.msg').forEach(m => {
-            if (!m.classList.contains('hint')) {
-                messages.push({
-                    text: m.textContent,
-                    who: m.classList.contains('user') ? 'user' : 'bot'
-                });
-            }
-        });
-        localStorage.setItem('chatHistory', JSON.stringify(messages));
-    }
 
     function onQClick(event) {
         if (event) {
