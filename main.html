@@ -206,8 +206,40 @@
             .help-body { padding: 20px 18px; }
         }
     </style>
+    <style>
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%);
+            border: 3px solid #6b4423;
+            color: #5c3317;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+        .music-btn:hover { transform: scale(1.08); }
+        .music-btn:active { transform: scale(0.95); }
+
+        @media (max-width: 600px) {
+            .music-btn {
+                bottom: 16px;
+                left: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
-<body>
+</body>
     <style>
 .wood-frame {
     background:
@@ -501,5 +533,48 @@
                 .catch(err => console.log('SW 注册失败:', err));
         }
     </script>
+<!-- 背景音乐 -->
+<audio id="bgmMain" loop preload="auto">
+    <source src="stardew valley overture.ogg" type="audio/ogg">
+</audio>
+<button class="music-btn" id="musicBtnMain" title="播放/暂停音乐">🔊</button>
+
+<script>
+    const bgmMain = document.getElementById('bgmMain');
+    const musicBtnMain = document.getElementById('musicBtnMain');
+    const MUSIC_KEY = 'bgm_playing';
+
+    function tryPlay() {
+        bgmMain.volume = 0.3;
+        bgmMain.play().then(() => {
+            localStorage.setItem(MUSIC_KEY, '1');
+            musicBtnMain.textContent = '🔊';
+        }).catch(() => {});
+    }
+
+    window.addEventListener('load', () => {
+        if (localStorage.getItem(MUSIC_KEY) === '1') {
+            tryPlay();
+        }
+    });
+
+    let firstTouch = false;
+    document.addEventListener('click', function once() {
+        if (firstTouch) return;
+        firstTouch = true;
+        tryPlay();
+    });
+
+    musicBtnMain.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (bgmMain.paused) {
+            tryPlay();
+        } else {
+            bgmMain.pause();
+            musicBtnMain.textContent = '🔇';
+            localStorage.setItem(MUSIC_KEY, '0');
+        }
+    });
+</script>
 </body>
 </html>
