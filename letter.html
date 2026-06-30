@@ -353,8 +353,8 @@ fetch('letter-messages.txt')
         // 计算日期（按北京时区 UTC+8 算，避免服务器时区差异）
         const DEPART_DATE_STR = '2026-09-01';  // 出发日期，改这一行就行
 
-        // 拿当前北京时间的年月日
-          // 夏令时 UTC-4
+        // 拿当前纽约时间的年月日
+        const nyNow = new Date();
         const nyYear = nyNow.getUTCFullYear();
         const nyMonth = nyNow.getUTCMonth();
         const nyDay = nyNow.getUTCDate();
