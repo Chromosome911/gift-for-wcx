@@ -241,6 +241,19 @@ function showTodayMessage() {
     if (MESSAGES.length === 0) return;
 
     const STORAGE_KEY = 'letter_used_idx';
+    const nyNow = new Date(Date.now() - 4 * 3600 * 1000);
+    const todayStr = nyNow.getUTCFullYear() + '-' + String(nyNow.getUTCMonth() + 1).padStart(2, '0') + '-' + String(nyNow.getUTCDate()).padStart(2, '0');
+
+    function showTodayMessage() {
+    if (MESSAGES.length === 0) return;
+
+    const STORAGE_KEY = 'letter_used_idx';
+    const STORAGE_DATE = 'letter_last_date';
+    const STORAGE_TODAY_IDX = 'letter_today_idx';
+
+    // 纽约时间今天的日期字符串
+    const nyNow = new Date(Date.now() - 4 * 3600 * 1000);
+    const todayStr = nyNow.getUTCFullYear() + '-' + String(nyNow.getUTCMonth() + 1).padStart(2, '0') + '-' + String(nyNow.getUTCDate()).padStart(2, '0');
 
     function getUnusedIndices(needCount) {
         let used = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -263,12 +276,25 @@ function showTodayMessage() {
         return result;
     }
 
-    const todayIndices = getUnusedIndices(1);
-    const todayContent = MESSAGES[todayIndices[0]];
+    // 关键:今天已经选过的话,直接显示上次那条
+    const lastDate = localStorage.getItem(STORAGE_DATE);
+    const savedIdx = localStorage.getItem(STORAGE_TODAY_IDX);
+
+    let todayContent;
+    if (lastDate === todayStr && savedIdx !== null) {
+        // 今天的还没换,直接用上次的
+        todayContent = MESSAGES[parseInt(savedIdx)];
+    } else {
+        // 今天第一次,或者新一天了,重新抽
+        const todayIndices = getUnusedIndices(1);
+        todayContent = MESSAGES[todayIndices[0]];
+        localStorage.setItem(STORAGE_DATE, todayStr);
+        localStorage.setItem(STORAGE_TODAY_IDX, todayIndices[0]);
+    }
 
     const typeLabel =
-        todayContent.type === 'tip' ? '💡 小贴士（带tip前缀的不要采纳！）' :
-        todayContent.type === 'wish' ? '💝 祝福（以及闲聊）' :
+        todayContent.type === 'tip' ? '💡 小贴士（带tip的不要采纳！）' :
+        todayContent.type === 'wish' ? '💝 祝福(或闲聊）' :
         '✨ 金句';
 
     document.getElementById('todayTip').innerHTML = `
