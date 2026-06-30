@@ -237,12 +237,7 @@ fetch('letter-messages.txt')
         showTodayMessage();
     });
 
-function showTodayMessage() {
-    if (MESSAGES.length === 0) return;
 
-    const STORAGE_KEY = 'letter_used_idx';
-    const nyNow = new Date(Date.now() - 4 * 3600 * 1000);
-    const todayStr = nyNow.getUTCFullYear() + '-' + String(nyNow.getUTCMonth() + 1).padStart(2, '0') + '-' + String(nyNow.getUTCDate()).padStart(2, '0');
 
     function showTodayMessage() {
     if (MESSAGES.length === 0) return;
