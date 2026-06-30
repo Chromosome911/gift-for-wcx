@@ -519,13 +519,6 @@
             document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
         }
 
-               window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    document.getElementById('loadingScreen').classList.add('fade-out');
-    document.getElementById('mainPage').classList.add('loaded');
-  }, 800);
-});
-
         // 注册 Service Worker(PWA 离线)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js')
@@ -575,6 +568,14 @@
             localStorage.setItem(MUSIC_KEY, '0');
         }
     });
+</script>
+<script>
+setTimeout(function() {
+  var loading = document.getElementById('loadingScreen');
+  var main = document.getElementById('mainPage');
+  if (loading) loading.classList.add('fade-out');
+  if (main) main.classList.add('loaded');
+}, 1000);
 </script>
 </body>
 </html>
