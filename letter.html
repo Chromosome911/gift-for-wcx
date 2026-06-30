@@ -252,7 +252,7 @@ function showTodayMessage() {
     const STORAGE_TODAY_IDX = 'letter_today_idx';
 
     // 纽约时间今天的日期字符串
-    const nyNow = new Date(Date.now() - 4 * 3600 * 1000);
+    
     const todayStr = nyNow.getUTCFullYear() + '-' + String(nyNow.getUTCMonth() + 1).padStart(2, '0') + '-' + String(nyNow.getUTCDate()).padStart(2, '0');
 
     function getUnusedIndices(needCount) {
