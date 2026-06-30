@@ -316,39 +316,7 @@ function showTodayMessage() {
         // 显示今天日期（也用北京时区）
         document.getElementById('todayDate').textContent = nyYear + '-' + String(nyMonth + 1).padStart(2, '0') + '-' + String(nyDay).padStart(2, '0');
 
-        // 随机不重复
-        const STORAGE_KEY = 'letter_used_idx';
-
-        function getUnusedIndices(needCount) {
-            let used = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            let available = [];
-            for (let i = 0; i < MESSAGES.length; i++) {
-                if (!used.includes(i)) available.push(i);
-            }
-            if (available.length < needCount) {
-                used = [];
-                available = Array.from({length: MESSAGES.length}, (_, i) => i);
-            }
-            const result = [];
-            for (let n = 0; n < needCount && available.length > 0; n++) {
-                const idx = Math.floor(Math.random() * available.length);
-                result.push(available[idx]);
-                available.splice(idx, 1);
-            }
-            const newUsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]').concat(result);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(newUsed));
-            return result;
-        }
-
-        // 今日份
-        const todayIndices = getUnusedIndices(1);
-        const todayContent = MESSAGES[todayIndices[0]];
-
-        document.getElementById('todayTip').innerHTML = `
-            <div style="font-size:18px; margin-bottom:8px; color:#8b4513;">${todayContent.type === 'tip' ? '💡 小贴士' : todayContent.type === 'wish' ? '💝 祝福' : '✨ 金句'}</div>
-            <div style="font-size:20px; line-height:1.6;">${todayContent.text}</div>
-            ${todayContent.author ? '<div style="font-size:14px; color:#999; margin-top:10px;">—— ' + todayContent.author + '</div>' : ''}
-        `;
+       
 
         // 记得列表（保存到 localStorage）
         const reminderArea = document.getElementById('reminderArea');
