@@ -292,12 +292,19 @@
             document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
         }
 
-        window.addEventListener('load', () => {
+               window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('fade-out');
                 document.getElementById('mainPage').classList.add('loaded');
             }, 600);
         });
+
+        // 注册 Service Worker(PWA 离线)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('SW 注册成功'))
+                .catch(err => console.log('SW 注册失败:', err));
+        }
     </script>
 </body>
 </html>
