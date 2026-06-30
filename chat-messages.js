@@ -2,8 +2,8 @@ const CHAT_CONFIG = {
     greeting: "我是信息",
 
     clickResponses: [
-        "我是信息", "我是信息", "我是信息", "我是信息", "我是信息",
-        "我是信息", "我是信息", "我是信息", "我是信息", "我是信息"
+        "我是信息", "我是信", "我是", "我", "xinxi",
+        "xi", "xin", "hahaha", "abc", "doremi"
     ],
 
     defaultResponses: [
