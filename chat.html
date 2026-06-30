@@ -85,10 +85,7 @@ function saveHistory() {
     const list = CHAT_CONFIG.clickResponses || [];
     if (list.length === 0) return;
     let msg;
-    do {
-        msg = list[Math.floor(Math.random() * list.length)];
-    } while (msg === lastClickedMsg && list.length > 1);
-    lastClickedMsg = msg;
+    msg = list[Math.floor(Math.random() * list.length)];
     addMsg(msg, 'bot');
 }
 
