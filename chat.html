@@ -28,7 +28,7 @@
 
 <div class="title-bar">💬 和我聊天</div>
 
-<div id="qVersion" onclick="onQClick()" style="background-image:url('q-version.png');background-size:cover;background-position:center"></div>
+<div id="qVersion" style="background-image:url('q-version.png');background-size:cover;background-position:center"></div>
 
 <div id="chatArea">
     <div class="hint">试着说点什么，或者点左上角的我 👆</div>
@@ -68,16 +68,20 @@
         localStorage.setItem('chatHistory', JSON.stringify(messages));
     }
 
-    function onQClick() {
-        const list = CHAT_CONFIG.clickResponses || [];
-        if (list.length === 0) return;
-        let msg;
-        do {
-            msg = list[Math.floor(Math.random() * list.length)];
-        } while (msg === lastClickedMsg && list.length > 1);
-        lastClickedMsg = msg;
-        addMsg(msg, 'bot');
+    function onQClick(event) {
+        if (event) {
+          event.preventDefault();
+          event.stopPropagation();
     }
+    const list = CHAT_CONFIG.clickResponses || [];
+    if (list.length === 0) return;
+    let msg;
+    do {
+        msg = list[Math.floor(Math.random() * list.length)];
+    } while (msg === lastClickedMsg && list.length > 1);
+    lastClickedMsg = msg;
+    addMsg(msg, 'bot');
+}
 
     function findResponse(text) {
         const lower = text.toLowerCase();
@@ -108,8 +112,24 @@
     });
 
     let lastClickedMsg = '';
+    
+// 安全地绑事件,避免内嵌 onclick
+    const qVersion = document.getElementById('qVersion');
+    if (qVersion) {
+        let qClicking = false;
+        qVersion.addEventListener('click', function(e) {
+        if (qClicking) return;
+        qClicking = true;
+        try {
+            onQClick(e);
+        } finally {
+            setTimeout(() => { qClicking = false; }, 100);
+        }
+    });
+}
 
     const saved = localStorage.getItem('chatHistory');
+    
 if (saved) {
     const hint = chatArea.querySelector('.hint');
     if (hint) hint.remove();
