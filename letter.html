@@ -318,7 +318,8 @@ fetch('letter-messages.txt')
     function showTodayMessage() {
     if (MESSAGES.length === 0) return;
 
-    const nyNow = new Date(Date.now() - 4 * 3600 * 1000);
+    const now = new Date();
+    const nyNow = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
 
     const STORAGE_KEY = 'letter_used_idx';
     const STORAGE_DATE = 'letter_last_date';
