@@ -63,17 +63,20 @@
         }
 
         .back-link {
-            display: inline-block;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #8b4513;
-            color: #5c3317;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #8b4513;
+    color: #5c3317;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
 
         .container {
             max-width: 600px;
@@ -192,6 +195,29 @@
         .event-item:last-child { border-bottom: none; }
 
         .event-name { color: #8b4513; font-weight: bold; }
+    .music-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #d4a76a 0%, #b8864a 100%);
+    border: 3px solid #6b4423;
+    color: #5c3317;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: transform 0.2s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+.music-btn:hover { transform: scale(1.08); }
+.music-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
