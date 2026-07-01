@@ -398,7 +398,7 @@ fetch('letter-messages.txt')
         if (saved) {
             reminderArea.innerHTML = saved;
         }
-        reminderArea.addEventListener('blur', function() {
+        if (reminderArea) reminderArea.addEventListener('blur', function() {
             localStorage.setItem(SAVED_REMINDER, this.innerHTML);
            });
 
