@@ -147,13 +147,17 @@ function addMsg(text, who) {
         chatArea.appendChild(div);
     }
     
-    // 3. 限制 DOM 最多 50 条
-    const domMsgs = chatArea.querySelectorAll('.msg');
-    if (domMsgs.length > 50) {
-        for (let i = 0; i < domMsgs.length - 50; i++) {
-            chatArea.removeChild(domMsgs[i]);
+        // 3. 限制 DOM 最多 50 条(只数 chatArea 直接子元素,避免嵌套 msg 报 removeChild 错)
+    const allChildren = Array.from(chatArea.children);
+    if (allChildren.length > 50) {
+        const removeCount = allChildren.length - 50;
+        for (let i = 0; i < removeCount; i++) {
+            if (allChildren[i] && allChildren[i].parentNode === chatArea) {
+                chatArea.removeChild(allChildren[i]);
+            }
         }
     }
+   
     
     chatArea.scrollTop = chatArea.scrollHeight;
     if (!isLoadingHistory) saveHistory();
